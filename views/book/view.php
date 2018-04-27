@@ -1,0 +1,1 @@
+<h1><?= $book->book_name ?></h1>
