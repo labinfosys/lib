@@ -45,7 +45,13 @@ class Author extends \yii\db\ActiveRecord
             'name' => 'Name',
             'surname' => 'Surname',
             'patronymic' => 'Patronymic',
+            'fullName' => 'Автор'
         ];
+    }
+
+    public function getFullName()
+    {
+        return $this->surname . ' ' . $this->name;
     }
 
     /**
