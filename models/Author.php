@@ -53,7 +53,6 @@ class Author extends \yii\db\ActiveRecord
     {
         return $this->surname . ' ' . $this->name;
     }
-    
     /**
      * @return \yii\db\ActiveQuery
      */

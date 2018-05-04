@@ -53,7 +53,6 @@ $config = [
                 'book/new' => 'book/new',
             ],
         ],
-        
     ],
     'params' => $params,
 ];

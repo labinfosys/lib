@@ -17,33 +17,32 @@ class BookController extends \yii\web\Controller
                 'pageSize' => 20,
             ],
         ]);
-        return $this->render('index',[
+        
+        return $this->render('index', [
             'books' => $books->all(),
             'dpBooks' => $dpBooks
-            ]);
-        }
-        
+        ]);
+    }
     public function actionView($id)
     {
         $book = Book::find()
-            ->where(['id'=>$id])
+            ->where(['id' => $id])
             ->one();
-        return $this->render('view',[
-            'book'=>$book
+        return $this->render('view', [
+            'book' => $book,
         ]);
     }
     public function actionNew()
     {
-        if (isset($_POST['book'])) {
+        if (isset($_POST['Book'])) {
             $book = new Book;
-            $book->atributes;
-            var_dump($_POST);
+            $book->attributes = $_POST['Book'];
+            $book->save();
+            return $this->redirect(['book/view', $book->id]);
         }
         $authors = Author::find()->all();
         return $this->render('new', [
-        'authors' => $authors
+            'authors' => $authors
         ]);
-           
     }
-
 }
