@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Book;
 use app\models\Author;
 use yii\data\ActiveDataProvider;
+use Yii;
 
 class BookController extends \yii\web\Controller
 {
@@ -32,13 +33,19 @@ class BookController extends \yii\web\Controller
             'book' => $book,
         ]);
     }
+    
     public function actionNew()
     {
-        if (isset($_POST['Book'])) {
+        if (!is_null(Yii::$app->request->post('Book'))) {
             $book = new Book;
-            $book->attributes = $_POST['Book'];
-            $book->save();
-            return $this->redirect(['book/view', $book->id]);
+            $book->attributes = Yii::$app->request->post('Book');
+            $author = Author::find()
+                ->where(['id' => Yii::$app->request->post('Book')['author_id']])
+                ->one();
+            $book->link('author', $author);
+            if ($book->save()) {
+                return $this->redirect(['book/view', 'id' => $book->id]);
+            }
         }
         $authors = Author::find()->all();
         return $this->render('new', [

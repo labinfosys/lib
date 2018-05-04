@@ -11,7 +11,7 @@ use yii\helpers\Html;
     </label><br>
     <label>
         Автор
-        <select name="Book[author]" id="">
+        <select name="Book[author_id]">
             <?php foreach($authors as $author) : ?>
                 <option value="<?= $author->id ?>"><?= $author->fullName ?></option>
             <?php endforeach; ?>
