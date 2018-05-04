@@ -113,3 +113,11 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.h{
+    color: #99CC33;
+}
+
+.p_view{
+    font-size: 12pt;
+}

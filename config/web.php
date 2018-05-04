@@ -43,15 +43,14 @@ $config = [
             ],
         ],
         'db' => $db,
-        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 'books' => 'book/index',
-                'book/<\d+>' => 'book/view',
-                'book/edit/<\d+>' => 'book/edit',
-                'book/new/<\d+>' => 'book/new',
+                'book/<id:\d+>' => 'book/view',
+                'book/edit/<id>' => 'book/edit',
+                'book/new' => 'book/new',
             ],
         ],
         
