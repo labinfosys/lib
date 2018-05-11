@@ -26,18 +26,15 @@ class BookController extends \yii\web\Controller
     }
     public function actionView($id)
     {
-        $book = Book::find()
-            ->where(['id' => $id])
-            ->one();
         return $this->render('view', [
-            'book' => $book,
+            'book' => $this->getBook($id)
         ]);
     }
     
     public function actionNew()
     {
+        $book = new Book;
         if (!is_null(Yii::$app->request->post('Book'))) {
-            $book = new Book;
             $book->attributes = Yii::$app->request->post('Book');
             $author = Author::find()
                 ->where(['id' => Yii::$app->request->post('Book')['author_id']])
@@ -49,7 +46,34 @@ class BookController extends \yii\web\Controller
         }
         $authors = Author::find()->all();
         return $this->render('new', [
-            'authors' => $authors
+            'authors' => $authors,
+            'book'    => $book
         ]);
+    }
+
+    public function actionEdit($id) 
+    {
+        $book = $this->getBook($id);
+        if (!is_null(Yii::$app->request->post('Book'))) {
+            $book->attributes = Yii::$app->request->post('Book');
+            $author = Author::find()
+                ->where(['id' => Yii::$app->request->post('Book')['author_id']])
+                ->one();
+            $book->link('author', $author);
+            if ($book->save()) {
+                return $this->redirect(['book/view', 'id' => $book->id]);
+            }
+        }
+        return $this->render('edit', [
+            'book' => $book,
+            'authors' => Author::find()->all()
+        ]);
+    }
+
+    private function getBook($id)
+    {
+        return Book::find()
+            ->where(['id' => $id])
+            ->one();
     }
 }

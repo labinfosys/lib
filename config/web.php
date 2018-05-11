@@ -49,7 +49,7 @@ $config = [
             'rules' => [
                 'books' => 'book/index',
                 'book/<id:\d+>' => 'book/view',
-                'book/edit/<id>' => 'book/edit',
+                'book/edit/<id:\d+>' => 'book/edit',
                 'book/new' => 'book/new',
             ],
         ],
