@@ -14,6 +14,7 @@ $authors = ArrayHelper::map($authors, 'id', 'fullName');
         ['prompt'=>'Выберите автора']
     ) ?>
     <?= $form->field($book, 'description')->textarea(['rows' => 3]) ?>
+    <?= $form->field($book, 'coverFile')->fileInput() ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

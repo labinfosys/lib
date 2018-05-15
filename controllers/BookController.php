@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Book;
 use app\models\Author;
 use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
 use Yii;
 
 class BookController extends \yii\web\Controller
