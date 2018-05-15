@@ -12,7 +12,13 @@ use app\models\Book;
 GridView::widget([
     'dataProvider' => $dpBooks,
     'columns' => [
-        'book_name',
+        [
+            'attribute' => 'book_name',
+            'format' => 'html',
+            'value' => function($book) {
+                return Html::a($book->book_name, ['book/view', 'id' => $book->id]);
+            },
+        ],
         'author.fullName',
         'description'
     ]
