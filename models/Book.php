@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "book".
@@ -65,26 +66,42 @@ class Book extends \yii\db\ActiveRecord
         return $this->hasOne(Author::className(), ['id' => 'author_id']);
     }
 
-    public function upload()
+    private function upload()
     {
         if ($this->validate()) {
-            $this->coverFile->saveAs('uploads/' . $this->coverFile->baseName . '.' . $this->coverFile->extension, false);
+            $path = FileHelper::normalizePath(
+                Yii::getAlias('@webroot/uploads/' . $this->id . '/')
+            );
+            if (!file_exists($path)) {
+                FileHelper::createDirectory($path);
+            }
+            $this->coverFile->saveAs($path . '/' . $this->coverFile->baseName . '.' . $this->coverFile->extension, false);
             return true;
         } else {
             return false;
         }
     }
 
-    public function beforeSave($insert) 
+    // public function beforeSave($insert) 
+    // {
+    //     if (!parent::beforeSave($insert)) {
+    //         return false;
+    //     }
+    //     $this->coverFile = UploadedFile::getInstance($this, 'coverFile');
+    //     if (!is_null($this->coverFile)) {
+    //         $this->upload();
+    //         $this->cover = $this->coverFile->name;
+    //     }
+    //     return true;
+    // }
+
+    public function afterSave($insert, $attr) 
     {
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
+        parent::afterSave($insert, $attr);
         $this->coverFile = UploadedFile::getInstance($this, 'coverFile');
         if (!is_null($this->coverFile)) {
             $this->upload();
             $this->cover = $this->coverFile->name;
         }
-        return true;
     }
 }
