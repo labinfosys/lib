@@ -11,6 +11,7 @@ use app\models\Book;
 <?=
 GridView::widget([
     'dataProvider' => $dpBooks,
+    'filterModel'  => $smBooks,
     'columns' => [
         [
             'attribute' => 'book_name',
@@ -31,7 +32,7 @@ GridView::widget([
         // ],
 ]);
 ?>
-
+<?php /*
 <ul>
 <?php foreach($books as $book) : ?>
     <li>
@@ -42,5 +43,5 @@ GridView::widget([
     </li>
 <?php endforeach; ?>
 </ul>
-
+*/ ?>
 <?= Html::a('Добавить книгу', ['book/new'], ['class' => 'btn btn-primary']) ?>
