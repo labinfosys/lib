@@ -82,26 +82,23 @@ class Book extends \yii\db\ActiveRecord
         }
     }
 
-    // public function beforeSave($insert) 
-    // {
-    //     if (!parent::beforeSave($insert)) {
-    //         return false;
-    //     }
-    //     $this->coverFile = UploadedFile::getInstance($this, 'coverFile');
-    //     if (!is_null($this->coverFile)) {
-    //         $this->upload();
-    //         $this->cover = $this->coverFile->name;
-    //     }
-    //     return true;
-    // }
+    public function beforeSave($insert) 
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        $this->coverFile = UploadedFile::getInstance($this, 'coverFile');
+        if (!is_null($this->coverFile)) {
+            $this->cover = $this->coverFile->name;
+        }
+        return true;
+    }
 
     public function afterSave($insert, $attr) 
     {
         parent::afterSave($insert, $attr);
-        $this->coverFile = UploadedFile::getInstance($this, 'coverFile');
         if (!is_null($this->coverFile)) {
             $this->upload();
-            $this->cover = $this->coverFile->name;
         }
     }
 }
