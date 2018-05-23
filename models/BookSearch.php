@@ -12,8 +12,8 @@ class BookSearch extends Book
     public function rules()
     {
         return [
-            [['book_name'], 'string', 'max' => 255],
-            // [['author.fullName'], 'string', 'max' => 255],
+            [['book_name', 'description'], 'string', 'max' => 255],
+            [['author.fullName'], 'string', 'max' => 255],
         ];
     }
 
@@ -22,22 +22,33 @@ class BookSearch extends Book
         return Model::scenarios();
     }
 
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['author.fullName']);
+    }
+
     public function search($params)
     {
-        $query = Book::find();
+        $query = Book::find(); // ActiveQuery 
         $dataProvider = new ActiveDataProvider([
             'query' => $query
         ]);
-        // var_dump($params); die();
+
+        $query->joinWith(['author']);
+
+
+        $dataProvider->sort->attributes['author.fullName'] = [
+            'asc' => ['author.surname' => SORT_ASC],
+            'desc' => ['author.surname' => SORT_DESC],
+        ];
+         
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
         $query->andFilterWhere(['like', 'book_name', $this->book_name]);
-        
-        if (isset($params['sort'])) {
-            $query->orderBy($params['sort']);
-        }
-        
+        $query->andFilterWhere(['like', 'author.surname', $this->getAttribute('author.fullName')]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
+
         return $dataProvider;
     }
 }
