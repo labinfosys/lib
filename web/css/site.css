@@ -122,23 +122,3 @@ a.desc:after {
 .p_view{
     font-size: 12pt;
 }
-.book_cover{
-    float: left;
-    width: 20%;
-    height: 300px;
-    border: 1px solid grey;
-}
-.book_cover img {
-    width: 100%;
-}
-.book_info{
-    float: left;
-    width: 80%;
-    height: 300px;
-    border: 1px solid grey;
-}
-.book_des{
-    height: auto;
-    margin-top: 30px;
-    border-top: 1px solid grey;
-}

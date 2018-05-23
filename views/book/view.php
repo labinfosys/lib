@@ -1,5 +1,8 @@
 <?php
 use yii\UrlHelper;
+use app\assets\BookAsset;
+
+BookAsset::register($this);
 ?>
 
 <h1><?= $book->book_name ?></h1>
