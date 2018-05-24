@@ -53,6 +53,10 @@ $config = [
                 'book/new' => 'book/new',
             ],
         ],
+        'assetManager' => [
+            'class' => 'yii\web\AssetManager',
+            'forceCopy' => true,          
+        ],
     ],
     'params' => $params,
 ];
