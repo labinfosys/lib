@@ -115,9 +115,29 @@ a.desc:after {
 }
 
 .h{
+    margin-left: 20px;
     color: #99CC33;
 }
 
 .p_view{
     font-size: 12pt;
+}
+.book_cover{
+    width: 20%;
+    height: 300px;
+    float: left;
+    border: 1px solid grey;
+}
+.book_info{
+    width: 80%;
+    height: 300px;
+    float: left;
+    border: 1px solid grey;
+}
+.book_des{
+    width: auto;
+    height: auto;
+    margin-top: 30px;
+    float: left;
+    border-top: 1px solid grey;
 }
