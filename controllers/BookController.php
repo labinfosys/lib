@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Book;
+use app\models\BookSearch;
 use app\models\Author;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
@@ -12,17 +13,23 @@ class BookController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $books = Book::find();
-        $dpBooks = new ActiveDataProvider([
-            'query' => $books,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+
+        $searchModel = new BookSearch();
+        $dpBooks = $searchModel->search(Yii::$app->request->get());
+
+
+        // $books = Book::find();
+        // $dpBooks = new ActiveDataProvider([
+        //     'query' => $books,
+        //     'pagination' => [
+        //         'pageSize' => 20,
+        //     ],
+        // ]);
         
         return $this->render('index', [
-            'books' => $books->all(),
-            'dpBooks' => $dpBooks
+            // 'books' => $books->all(),
+            'dpBooks' => $dpBooks,
+            'smBooks' => $searchModel
         ]);
     }
     public function actionView($id)

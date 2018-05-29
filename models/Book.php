@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "book".
@@ -39,7 +40,7 @@ class Book extends \yii\db\ActiveRecord
             [['book_name'], 'string', 'max' => 255],
             [['book_name', 'author_id'], 'required'],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::className(), 'targetAttribute' => ['author_id' => 'id']],
-            [['coverFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['coverFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, gif']
         ];
     }
 
@@ -53,7 +54,7 @@ class Book extends \yii\db\ActiveRecord
             'author_id' => 'Автор',
             'book_name' => 'Название',
             'description' => 'Описание',
-            'coverFile' => 'Обложка',
+            'cover' => 'Обложка',
         ];
     }
 
@@ -65,29 +66,39 @@ class Book extends \yii\db\ActiveRecord
         return $this->hasOne(Author::className(), ['id' => 'author_id']);
     }
 
-
-    public function upload()
+    private function upload()
     {
         if ($this->validate()) {
-            $this->coverFile->saveAs('uploads/' . $this->coverFile->baseName . '.' . $this->coverFile->extension);
+            $path = FileHelper::normalizePath(
+                Yii::getAlias('@webroot/uploads/' . $this->id . '/')
+            );
+            if (!file_exists($path)) {
+                FileHelper::createDirectory($path);
+            }
+            $this->coverFile->saveAs($path . '/' . $this->coverFile->baseName . '.' . $this->coverFile->extension, false);
             return true;
         } else {
             return false;
         }
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert) 
     {
-        if (!parent::beforeSave($insert))
-        {
+        if (!parent::beforeSave($insert)) {
             return false;
         }
         $this->coverFile = UploadedFile::getInstance($this, 'coverFile');
-        if (!is_null($this->coverFile))
-        {
-            $this->upload();
-            $this->coverFile = $this->coverFile->name;
+        if (!is_null($this->coverFile)) {
+            $this->cover = $this->coverFile->name;
         }
         return true;
+    }
+
+    public function afterSave($insert, $attr) 
+    {
+        parent::afterSave($insert, $attr);
+        if (!is_null($this->coverFile)) {
+            $this->upload();
+        }
     }
 }
