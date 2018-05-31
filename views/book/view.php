@@ -1,6 +1,7 @@
 <?php
 use yii\UrlHelper;
 use app\assets\BookAsset;
+use yii\helpers\Html;
 
 BookAsset::register($this);
 ?>
@@ -17,11 +18,16 @@ BookAsset::register($this);
 <div class="book_info">
     <h3 class="h">
         Автор: <p class="p_view"><?= $book->author->fullName ?></p>
+        <?php if (!is_null($book->genre)) : ?>
         Жанр: <p class="p_view"><?= $book->genre->genre ?></p>
+        <?php endif; ?>
     </h3>
 </div>
 <div class="clearfix"></div>
 <div class="book_des">
     <h3 class="h">Описание:</h3>
     <p class="p_view"><?= $book->description ?></p>
+</div>
+<div>
+    <?= Html::a('Редактировать', ['book/edit', 'id' => $book->id]); ?>
 </div>

@@ -2,16 +2,42 @@
 
 namespace app\controllers;
 
+use Yii;
+use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
+
 use app\models\Genre;
 use app\models\Book;
 use app\models\BookSearch;
 use app\models\Author;
-use yii\data\ActiveDataProvider;
-use yii\web\UploadedFile;
-use Yii;
 
 class BookController extends \yii\web\Controller
 {
+
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                // 'only' => ['index', 'view'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        // 'actions' => ['new', 'edit'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
 
@@ -87,7 +113,8 @@ class BookController extends \yii\web\Controller
         }
         return $this->render('edit', [
             'book' => $book,
-            'authors' => Author::find()->all()
+            'authors' => Author::find()->all(),
+            'genre' => Genre::find()->all(),
         ]);
     }
 

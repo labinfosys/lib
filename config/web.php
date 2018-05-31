@@ -57,6 +57,9 @@ $config = [
             'class' => 'yii\web\AssetManager',
             'forceCopy' => true,          
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+        ],
     ],
     'params' => $params,
 ];
