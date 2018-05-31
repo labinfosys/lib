@@ -26,4 +26,7 @@ GridView::widget([
     ]
 ]);
 ?>
+
+<?php if (Yii::$app->user->can('createBook')) : ?>
 <?= Html::a('Добавить книгу', ['book/new'], ['class' => 'btn btn-primary']) ?>
+<?php endif; ?>

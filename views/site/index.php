@@ -11,4 +11,12 @@ $this->title = 'My Yii Application';
         <?php VarDumper::dump(\Yii::$app->getSecurity()->generatePasswordHash('12345'), 10, true) ?>
     </div>
 
+    <div>
+        <?php
+            if (\Yii::$app->user->can('createBook')) {
+                echo 'create book';
+            }
+        ?>
+    </div>
+
 </div>

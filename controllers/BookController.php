@@ -15,7 +15,6 @@ use app\models\Author;
 class BookController extends \yii\web\Controller
 {
 
-
     public function behaviors()
     {
         return [
@@ -30,8 +29,13 @@ class BookController extends \yii\web\Controller
                     ],
                     [
                         'allow' => true,
-                        // 'actions' => ['new', 'edit'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['new', 'edit'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
@@ -68,6 +72,8 @@ class BookController extends \yii\web\Controller
     
     public function actionNew()
     {
+        // if (!Yii::$app->user->can('createBook'))
+        //     throw new \yii\web\ForbiddenHttpException('У вас нет доступа к этой странице');
         $book = new Book;
         if (!is_null(Yii::$app->request->post('Book'))) {
             $book->attributes = Yii::$app->request->post('Book');
