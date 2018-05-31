@@ -39,7 +39,7 @@ class Genre extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'genre' => 'Genre',
+            'genre' => 'Жанр',
         ];
     }
 
@@ -50,4 +50,5 @@ class Genre extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Book::className(), ['genre_id' => 'id']);
     }
+
 }

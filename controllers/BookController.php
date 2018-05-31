@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Genre;
 use app\models\Book;
 use app\models\BookSearch;
 use app\models\Author;
@@ -47,13 +48,22 @@ class BookController extends \yii\web\Controller
             $author = Author::find()
                 ->where(['id' => Yii::$app->request->post('Book')['author_id']])
                 ->one();
+            $genre = Genre::find()
+                ->where(['id' => Yii::$app->request->post('Book')['genre_id']])
+                ->one();
             $book->link('author', $author);
             if ($book->save()) {
                 return $this->redirect(['book/view', 'id' => $book->id]);
             }
         }
+        // return $this->render('new', [
+        //     'authors' => $authors,
+        //     'book'    => $book
+        // ]);
         $authors = Author::find()->all();
+        $genre = Genre::find()->all();
         return $this->render('new', [
+            'genre'   => $genre,
             'authors' => $authors,
             'book'    => $book
         ]);
@@ -66,6 +76,9 @@ class BookController extends \yii\web\Controller
             $book->attributes = Yii::$app->request->post('Book');
             $author = Author::find()
                 ->where(['id' => Yii::$app->request->post('Book')['author_id']])
+                ->one();
+            $genre = Genre::find()
+                ->where(['id' => Yii::$app->request->post('Book')['genre_id']])
                 ->one();
             $book->link('author', $author);
             if ($book->save()) {

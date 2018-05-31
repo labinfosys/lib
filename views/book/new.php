@@ -2,5 +2,6 @@
 
 <?php echo $this->render('_form', [
     'book' => $book, 
-    'authors' => $authors
+    'authors' => $authors,
+    'genre' => $genre
 ]) ?>

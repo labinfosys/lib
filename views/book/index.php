@@ -20,6 +20,7 @@ GridView::widget([
                 return Html::a($book->book_name, ['book/view', 'id' => $book->id]);
             },
         ],
+        'genre.genre',
         'author.fullName',
         'description'
     ]

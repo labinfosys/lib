@@ -35,11 +35,12 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['author_id'], 'integer'],
+            [['author_id','genre_id'], 'integer'],
             [['description'], 'string'],
             [['book_name'], 'string', 'max' => 255],
             [['book_name', 'author_id'], 'required'],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::className(), 'targetAttribute' => ['author_id' => 'id']],
+            [['genre_id'], 'exist', 'skipOnError' => true, 'targetClass' => Genre::className(), 'targetAttribute' => ['genre_id' => 'id']],
             [['coverFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, gif']
         ];
     }
@@ -55,6 +56,7 @@ class Book extends \yii\db\ActiveRecord
             'book_name' => 'Название',
             'description' => 'Описание',
             'cover' => 'Обложка',
+            'genre_id' => 'Жанр'
         ];
     }
 
@@ -64,6 +66,11 @@ class Book extends \yii\db\ActiveRecord
     public function getAuthor()
     {
         return $this->hasOne(Author::className(), ['id' => 'author_id']);
+    }
+
+    public function getGenre()
+    {
+        return $this->hasOne(Genre::className(), ['id' => 'genre_id']);
     }
 
     private function upload()

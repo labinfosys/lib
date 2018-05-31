@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 $authors = ArrayHelper::map($authors, 'id', 'fullName');
+$genre = ArrayHelper::map($genre, 'id', 'genre');
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -13,6 +14,10 @@ $authors = ArrayHelper::map($authors, 'id', 'fullName');
         $authors, 
         ['prompt'=>'Выберите автора']
     ) ?>
+    <?= $form->field($book, 'genre_id')->dropdownList(
+        $genre, 
+        ['prompt'=>'Выберите жанр']
+    )?>
     <?= $form->field($book, 'description')->textarea(['rows' => 3]) ?>
     <?= $form->field($book, 'coverFile')->fileInput() ?>
     <div class="form-group">

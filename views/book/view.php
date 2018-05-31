@@ -6,20 +6,6 @@ BookAsset::register($this);
 ?>
 
 <h1><?= $book->book_name ?></h1>
-<<<<<<< HEAD
-    <div class="book_cover">
-    
-    </div>
-    <div class="book_info">
-        <h3 class="h">
-           Автор: <p class="p_view"><?= $book->author->fullName ?></p>
-        </h3>
-    </div>
-    <div class="book_des">
-        <h3 class="h">Описание:</h3>
-        <p class="p_view"><?= $book->description ?></p>
-    </div>
-=======
 
 <div class="book_cover">
     <?php if ($book->cover > '') : ?>
@@ -31,6 +17,7 @@ BookAsset::register($this);
 <div class="book_info">
     <h3 class="h">
         Автор: <p class="p_view"><?= $book->author->fullName ?></p>
+        Жанр: <p class="p_view"><?= $book->genre->genre ?></p>
     </h3>
 </div>
 <div class="clearfix"></div>
@@ -38,4 +25,3 @@ BookAsset::register($this);
     <h3 class="h">Описание:</h3>
     <p class="p_view"><?= $book->description ?></p>
 </div>
->>>>>>> f9902ac2bb1de57385bd7d7c858f7e1e182990b4
