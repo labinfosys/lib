@@ -41,7 +41,7 @@ class Book extends \yii\db\ActiveRecord
             [['book_name', 'author_id'], 'required'],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::className(), 'targetAttribute' => ['author_id' => 'id']],
             [['genre_id'], 'exist', 'skipOnError' => true, 'targetClass' => Genre::className(), 'targetAttribute' => ['genre_id' => 'id']],
-            [['coverFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, gif']
+            [['coverFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, gif']
         ];
     }
 
