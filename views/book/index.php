@@ -21,7 +21,7 @@ GridView::widget([
             },
         ],
         'genre.genre',
-        'author.fullName',
+        'authorList',
         'description'
     ]
 ]);

@@ -17,7 +17,9 @@ BookAsset::register($this);
 </div>
 <div class="book_info">
     <h3 class="h">
-        Автор: <p class="p_view"><?= $book->author->fullName ?></p>
+        <p class="p_view">
+            <strong>Авторы: </strong><?= $book->authorList ?>.
+        </p>
         <?php if (!is_null($book->genre)) : ?>
         Жанр: <p class="p_view"><?= $book->genre->genre ?></p>
         <?php endif; ?>

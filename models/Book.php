@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "book".
@@ -56,16 +57,25 @@ class Book extends \yii\db\ActiveRecord
             'book_name' => 'Название',
             'description' => 'Описание',
             'cover' => 'Обложка',
-            'genre_id' => 'Жанр'
+            'genre_id' => 'Жанр',
+            'authorList' => 'Авторы',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthor()
+    public function getAuthors()
     {
-        return $this->hasOne(Author::className(), ['id' => 'author_id']);
+        return $this->hasMany(Author::className(), ['id' => 'author_id'])
+            ->viaTable('book_author', ['book_id' => 'id']);
+    }
+
+    public function getAuthorList()
+    {
+        if (is_null($this->authors)) return '';
+        $authorList = ArrayHelper::map($this->authors, 'id', 'fullName');
+        return implode(', ', $authorList);
     }
 
     public function getGenre()

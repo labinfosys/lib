@@ -13,7 +13,7 @@ class BookSearch extends Book
     {
         return [
             [['book_name', 'description'], 'string', 'max' => 255],
-            [['author.fullName'], 'string', 'max' => 255],
+            [['authorList'], 'string', 'max' => 255],
         ];
     }
 
@@ -24,7 +24,7 @@ class BookSearch extends Book
 
     public function attributes()
     {
-        return array_merge(parent::attributes(), ['author.fullName']);
+        return array_merge(parent::attributes(), ['authorList']);
     }
 
     public function search($params)
@@ -34,19 +34,19 @@ class BookSearch extends Book
             'query' => $query
         ]);
 
-        $query->joinWith(['author']);
+        $query->joinWith('authors', true);
 
 
-        $dataProvider->sort->attributes['author.fullName'] = [
-            'asc' => ['author.surname' => SORT_ASC],
-            'desc' => ['author.surname' => SORT_DESC],
-        ];
+        // $dataProvider->sort->attributes['author.fullName'] = [
+        //     'asc' => ['author.surname' => SORT_ASC],
+        //     'desc' => ['author.surname' => SORT_DESC],
+        // ];
          
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
         $query->andFilterWhere(['like', 'book_name', $this->book_name]);
-        $query->andFilterWhere(['like', 'author.surname', $this->getAttribute('author.fullName')]);
+        $query->andFilterWhere(['like', 'author.surname', $this->getAttribute('authorList')]);
         $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
